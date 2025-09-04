@@ -1,10 +1,3 @@
-/*
- * @Author: w_lvqingke
- * @Date: 2025-09-02 18:40:10
- * @LastEditors: w_lvqingke
- * @LastEditTime: 2025-09-04 10:01:11
- * @Description:
- */
 /**
  * Copyright (c) 2025 Bytedance Ltd. and/or its affiliates
  * SPDX-License-Identifier: MIT

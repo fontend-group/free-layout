@@ -1,9 +1,15 @@
-/**
- * Copyright (c) 2025 Bytedance Ltd. and/or its affiliates
- * SPDX-License-Identifier: MIT
+/*
+ * @Author: w_zhaohongyang8 w_zhaohongyang8@xiwang.com
+ * @Date: 2025-09-03 23:13:50
+ * @LastEditors: w_lvqingke
+ * @LastEditTime: 2025-09-04 12:06:31
+ * @FilePath: /free-layout-main/src/nodes/index.ts
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 
+
 import { FlowNodeRegistry } from '../typings';
+import { WebTrackNodeRegistry } from './web-track';
 import { VariableNodeRegistry } from './variable';
 import { StartNodeRegistry } from './start';
 import { LoopNodeRegistry } from './loop';
@@ -35,4 +41,5 @@ export const nodeRegistries: FlowNodeRegistry[] = [
   BreakNodeRegistry,
   VariableNodeRegistry,
   GroupNodeRegistry,
+  WebTrackNodeRegistry,
 ];
