@@ -2,7 +2,7 @@
  * @Author: w_lvqingke
  * @Date: 2025-09-02 18:40:10
  * @LastEditors: w_lvqingke
- * @LastEditTime: 2025-09-03 23:06:42
+ * @LastEditTime: 2025-09-04 10:01:11
  * @Description:
  */
 /**
@@ -23,13 +23,30 @@ import Header from "./components/Header";
 import ProjectList from "./components/project-list";
 import { SidebarProvider, SidebarRenderer } from "./components/sidebar";
 import "./index.less";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IconIndentRight } from "@douyinfe/semi-icons";
+import { debounce } from "lodash-es";
 
 export const Editor = () => {
-  const editorProps = useEditorProps(initialData, nodeRegistries);
+  const ref = useRef<allMethods.FreeLayoutPluginContext | null>(null);
+  const lastData = localStorage.getItem('flowgram-data') ? JSON.parse(localStorage.getItem('flowgram-data') || '{}') : initialData;
+  const editorProps = useEditorProps(lastData, nodeRegistries);
   // 是否展开项目列表
   const [isExpanded, setIsExpanded] = useState(false);
+
+  useEffect(() => {
+    // 监听画布变化 延迟 1 秒 保存数据, 避免画布频繁更新
+    const toDispose = ref.current?.document.onContentChange(debounce(() => {
+        // 通过 toJSON 获取画布最新的数据
+          // request('https://xxxx/save', {
+          //   data: ref.current.document.toJSON()
+          // })
+          console.log('>>>>> save data: ', ref.current?.document.toJSON())
+          localStorage.setItem('flowgram-data', JSON.stringify(ref.current?.document.toJSON()))
+    }, 1000))
+    return () => toDispose?.dispose()
+  }, [])
+
   return (
     <Layout Header={<Header />}>
       <div className="doc-free-feature-overview">
@@ -43,7 +60,7 @@ export const Editor = () => {
               <IconIndentRight />
             </div>
           )}
-          <allMethods.FreeLayoutEditorProvider {...editorProps}>
+          <allMethods.FreeLayoutEditorProvider ref={ref} {...editorProps}>
             <SidebarProvider>
               <div className="demo-container">
                 <allMethods.EditorRenderer className="demo-editor" />
